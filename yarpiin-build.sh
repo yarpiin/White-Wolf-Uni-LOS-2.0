@@ -27,7 +27,7 @@ TOOLCHAIN_DIR="/home/yarpiin/Android/Toolchains"
 
 # Kernel Details
 BASE_YARPIIN_VER="WHITE.WOLF.UNI.Q"
-VER=".00X"
+VER=".005"
 AOSP_VER=".AOSP"
 LOS_VER=".LOS"
 YARPIIN_VER="$BASE_YARPIIN_VER$VER"
