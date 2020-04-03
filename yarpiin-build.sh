@@ -27,7 +27,7 @@ TOOLCHAIN_DIR="/home/yarpiin/Android/Toolchains"
 
 # Kernel Details
 BASE_YARPIIN_VER="WHITE.WOLF.UNI.Q"
-VER=".005"
+VER=".006"
 AOSP_VER=".AOSP"
 LOS_VER=".LOS"
 YARPIIN_VER="$BASE_YARPIIN_VER$VER"
@@ -210,7 +210,6 @@ case "$dchoice" in
 	y|Y)
 		make_star2_kernel
         repack_star2
-        repack_aosp_star2
 		break
 		;;
 	n|N )
@@ -254,7 +253,6 @@ case "$dchoice" in
 	y|Y)
 		make_star_kernel
         repack_star
-        repack_aosp_star
 		break
 		;;
 	n|N )
@@ -298,7 +296,6 @@ case "$dchoice" in
 	y|Y)
 		make_crown_kernel
         repack_crown
-        repack_aosp_crown
 		break
 		;;
 	n|N )
@@ -332,24 +329,7 @@ case "$dchoice" in
 esac
 done
 
-while read -p "Do you want to aosp zip kernel (y/n)? " dchoice
-do
-case "$dchoice" in
-	y|Y)
-		make_aosp_zip
-		break
-		;;
-	n|N )
-		break
-		;;
-	* )
-		echo
-		echo "Invalid try again!"
-		echo
-		;;
-esac
-done
-
+echo
 echo -e "${green}"
 echo "-------------------"
 echo "Build Completed in:"
