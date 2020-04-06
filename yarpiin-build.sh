@@ -21,43 +21,25 @@ CROWNDEFCONFIG="exynos9810-crownlte_defconfig"
 # Build dirs
 KERNEL_DIR="/home/yarpiin/Android/Kernel/UNI/White-Wolf-Uni-LOS"
 RESOURCE_DIR="$KERNEL_DIR/.."
-KERNELFLASHER_DIR="/home/yarpiin/Android/Kernel/UNI/Build/LosFlasher"
-AOSPKERNELFLASHER_DIR="/home/yarpiin/Android/Kernel/UNI/Build/AOSPFlasher"
+KERNELFLASHER_DIR="/home/yarpiin/Android/Kernel/UNI/Build/KernelFlasher"
 TOOLCHAIN_DIR="/home/yarpiin/Android/Toolchains"
 
 # Kernel Details
 BASE_YARPIIN_VER="WHITE.WOLF.UNI.Q"
-VER=".006"
-AOSP_VER=".AOSP"
+VER=".007"
 LOS_VER=".LOS"
 YARPIIN_VER="$BASE_YARPIIN_VER$VER"
 YARPIIN_LOS_VER="$BASE_YARPIIN_VER$LOS_VER$VER"
-YARPIIN_AOSP_VER="$BASE_YARPIIN_VER$AOSP_VER$VER"
+STAR_VER="S9."
+STAR2_VER="S9+."
+CROWN_VER="N9."
 
 # Vars
-export LOCALVERSION=-`echo $YARPIIN_VER`
 export CROSS_COMPILE="$TOOLCHAIN_DIR/aarch64-elf-gcc/bin/aarch64-elf-"
 export ARCH=arm64
 export SUBARCH=arm64
 export KBUILD_BUILD_USER=yarpiin
 export KBUILD_BUILD_HOST=kernel
-
-# Paths
-STARREPACK_DIR="/home/yarpiin/Android/Kernel/UNI/Build/LosRepack/G960/split_img"
-STAR2REPACK_DIR="/home/yarpiin/Android/Kernel/UNI/Build/LosRepack/G965/split_img"
-CROWNREPACK_DIR="/home/yarpiin/Android/Kernel/UNI/Build/LosRepack/N960/split_img"
-
-AOSPSTARREPACK_DIR="/home/yarpiin/Android/Kernel/UNI/Build/AOSPRepack/G960/split_img"
-AOSPSTAR2REPACK_DIR="/home/yarpiin/Android/Kernel/UNI/Build/AOSPRepack/G965/split_img"
-AOSPCROWNREPACK_DIR="/home/yarpiin/Android/Kernel/UNI/Build/AOSPRepack/N960/split_img"
-
-STARIMG_DIR="/home/yarpiin/Android/Kernel/UNI/Build/LosRepack/G960"
-STAR2IMG_DIR="/home/yarpiin/Android/Kernel/UNI/Build/LosRepack/G965"
-CROWNIMG_DIR="/home/yarpiin/Android/Kernel/UNI/Build/LosRepack/N960"
-
-AOSPSTARIMG_DIR="/home/yarpiin/Android/Kernel/UNI/Build/AOSPRepack/G960"
-AOSPSTAR2IMG_DIR="/home/yarpiin/Android/Kernel/UNI/Build/AOSPRepack/G965"
-AOSPCROWNIMG_DIR="/home/yarpiin/Android/Kernel/UNI/Build/AOSPRepack/N960"
 
 # Image dirs
 ZIP_MOVE="/home/yarpiin/Android/Kernel/UNI/Zip"
@@ -68,12 +50,6 @@ function clean_all {
 		if [ -f "$MODULES_DIR/*.ko" ]; then
 			rm `echo $MODULES_DIR"/*.ko"`
 		fi
-		cd $STARIMG_DIR
-		rm -rf zImage
-		rm -rf img.dtb
-		cd $STAR2IMG_DIR
-		rm -rf zImage
-		rm -rf img.dtb
 		cd $KERNEL_DIR
 		echo
 		make clean && make mrproper
@@ -81,74 +57,29 @@ function clean_all {
 
 function make_star_kernel {
 		echo
+        export LOCALVERSION=-`echo $STAR_VER$YARPIIN_LOS_VER`
 		make $STARDEFCONFIG
 		make $THREAD
-		cp -vr $ZIMAGE_DIR/$KERNEL $STARREPACK_DIR/G960.img-zImage
-        cp -vr $ZIMAGE_DIR/$DTBIMAGE $STARREPACK_DIR/G960.img-dt
-		cp -vr $ZIMAGE_DIR/$KERNEL $AOSPSTARREPACK_DIR/G960.img-zImage
-        cp -vr $ZIMAGE_DIR/$DTBIMAGE $AOSPSTARREPACK_DIR/G960.img-dt
-}
-
-function repack_star {
-		/bin/bash /home/yarpiin/Android/Kernel/UNI/Build/LosRepack/G960/repackimg.sh
-		cd $STARIMG_DIR
-		cp -vr image-new.img $KERNELFLASHER_DIR/G960.img
-		cd $KERNEL_DIR
-}
-
-function repack_aosp_star {
-		/bin/bash /home/yarpiin/Android/Kernel/UNI/Build/AOSPRepack/G960/repackimg.sh
-		cd $STARIMG_DIR
-		cp -vr image-new.img $AOSPKERNELFLASHER_DIR/G960.img
-		cd $KERNEL_DIR
+		cp -vr $ZIMAGE_DIR/$KERNEL $KERNELFLASHER_DIR/kernel/G960/zImage
+        cp -vr $ZIMAGE_DIR/$DTBIMAGE $KERNELFLASHER_DIR/kernel/G960/zImage-dtb
 }
 
 function make_star2_kernel {
 		echo
+        export LOCALVERSION=-`echo $STAR2_VER$YARPIIN_LOS_VER`
 		make $STAR2DEFCONFIG
 		make $THREAD
-		cp -vr $ZIMAGE_DIR/$KERNEL $STAR2REPACK_DIR/G965.img-zImage
-        cp -vr $ZIMAGE_DIR/$DTBIMAGE $STAR2REPACK_DIR/G965.img-dt
-		cp -vr $ZIMAGE_DIR/$KERNEL $AOSPSTAR2REPACK_DIR/G965.img-zImage
-        cp -vr $ZIMAGE_DIR/$DTBIMAGE $AOSPSTAR2REPACK_DIR/G965.img-dt
-}
-
-function repack_star2 {
-		/bin/bash /home/yarpiin/Android/Kernel/UNI/Build/LosRepack/G965/repackimg.sh
-		cd $STAR2IMG_DIR
-		cp -vr image-new.img $KERNELFLASHER_DIR/G965.img
-		cd $KERNEL_DIR
-}
-
-function repack_aosp_star2 {
-		/bin/bash /home/yarpiin/Android/Kernel/UNI/Build/AOSPRepack/G965/repackimg.sh
-		cd $STAR2IMG_DIR
-		cp -vr image-new.img $AOSPKERNELFLASHER_DIR/G965.img
-		cd $KERNEL_DIR
+		cp -vr $ZIMAGE_DIR/$KERNEL $KERNELFLASHER_DIR/kernel/G965/zImage
+        cp -vr $ZIMAGE_DIR/$DTBIMAGE $KERNELFLASHER_DIR/kernel/G965/zImage-dtb
 }
 
 function make_crown_kernel {
 		echo
+        export LOCALVERSION=-`echo $CROWN_VER$YARPIIN_LOS_VER`
 		make $CROWNDEFCONFIG
 		make $THREAD
-		cp -vr $ZIMAGE_DIR/$KERNEL $CROWNREPACK_DIR/N960.img-zImage
-        cp -vr $ZIMAGE_DIR/$DTBIMAGE $CROWNREPACK_DIR/N960.img-dt
-		cp -vr $ZIMAGE_DIR/$KERNEL $AOSPCROWNREPACK_DIR/N960.img-zImage
-        cp -vr $ZIMAGE_DIR/$DTBIMAGE $AOSPCROWNREPACK_DIR/N960.img-dt
-}
-
-function repack_crown {
-		/bin/bash /home/yarpiin/Android/Kernel/UNI/Build/LosRepack/N960/repackimg.sh
-		cd $CROWNIMG_DIR
-		cp -vr image-new.img $KERNELFLASHER_DIR/N960.img
-		cd $KERNEL_DIR
-}
-
-function repack_aosp_crown {
-		/bin/bash /home/yarpiin/Android/Kernel/UNI/Build/AOSPRepack/N960/repackimg.sh
-		cd $CROWNIMG_DIR
-		cp -vr image-new.img $KERNELFLASHER_DIR/N960.img
-		cd $KERNEL_DIR
+		cp -vr $ZIMAGE_DIR/$KERNEL $KERNELFLASHER_DIR/kernel/N960/zImage
+        cp -vr $ZIMAGE_DIR/$DTBIMAGE $KERNELFLASHER_DIR/kernel/N960/zImage-dtb
 }
 
 function make_zip {
@@ -158,12 +89,6 @@ function make_zip {
 		cd $KERNEL_DIR
 }
 
-function make_aosp_zip {
-		cd $AOSPKERNELFLASHER_DIR
-		zip -r9 `echo $YARPIIN_AOSP_VER`.zip *
-		mv  `echo $YARPIIN_AOSP_VER`.zip $ZIP_MOVE
-		cd $KERNEL_DIR
-}
 DATE_START=$(date +"%s")
 
 echo -e "${green}"
@@ -209,7 +134,6 @@ do
 case "$dchoice" in
 	y|Y)
 		make_star2_kernel
-        repack_star2
 		break
 		;;
 	n|N )
@@ -252,7 +176,6 @@ do
 case "$dchoice" in
 	y|Y)
 		make_star_kernel
-        repack_star
 		break
 		;;
 	n|N )
@@ -295,7 +218,6 @@ do
 case "$dchoice" in
 	y|Y)
 		make_crown_kernel
-        repack_crown
 		break
 		;;
 	n|N )

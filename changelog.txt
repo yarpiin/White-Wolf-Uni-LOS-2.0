@@ -1,6 +1,21 @@
 
 Project name: White-Wolf-Uni-LOS
 
+06/04/2020
+
+  * version 7 (Slawek) [e18f516322a0d]
+  * yarpiin_defconfig: bring back exynos hotplug (Slawek) [fdb10b7376385]
+  * exynos-hotplug: enable overclock v1 and reduce boot time to 20s (Slawek) [9506727b90890]
+  * exynos-hotplug_governor: change disabled freq to 2314 for overclock level 1 (flar2) [a1170990f95a1]
+  * exynos-hotplug_governor: use DUAL freq (2314) if hotplug is disabled (flar2) [69f683857b83f]
+  * exynos-hotplug_governor: allow big cluster to run all out if governor disabled and overclocked (flar2) [853b2964b0090]
+  * exynos 9810: boost multicore performance a bit (flar2) [9fb5402f3d6f2]
+  * exynos 9810: overclock CPU: (flar2) [77b2b7724a77f]
+  * Revert "cpufreq: exynos: Ignore ECT max frequency limits" (AndreiLux) [1002acb390515]
+  * Revert "exynos9810: overclock " (Slawek) [bb5d91201c934]
+  * Revert "block: introduce Anxiety I/O scheduler" (tytydraco) [5508a42605193]
+  * Revert "yarpiin_defconfig: enable Anxiety" (Slawek) [517635b414023]
+
 03/04/2020
 
   * version 6
