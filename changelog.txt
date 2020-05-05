@@ -1,6 +1,16 @@
 
 Project name: White-Wolf-Uni-LOS
 
+05/05/2020
+
+  * version 14
+  * Revert "sched/fair: skip frequency updates if CPU about to idle" (Joel Fernandes) [f3dfb7187e6f]
+  * Revert "sched/fair: Fix issue where frequency update not skipped" (Joel Fernandes) [be03f8a18f56]
+  * Revert "tick: don't update idle time if cpu offline" (FAROVITUS) [20f383ff9dd1]
+  * Revert "sched/fair: Fix rounding bug for asym packing" (Vincent Guittot) [6a21ee0e8d45]
+  * Revert "sched/fair: Trigger asym_packing during idle load balance" (Vincent Guittot) [60d8d0bdbd90]
+  * net/wireguard: update repositories (Slawek) [ae56e93ffff6]
+
 04/05/2020
 
   * version 13
